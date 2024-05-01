@@ -13,9 +13,59 @@ const escritorDeArquivo = (dados: any): void => {
 
 }
 
-const dados = leitorDeArquivo() as string[]
+type Endereco = {
 
-dados.push('Ucciolini')
-escritorDeArquivo(dados)
+    cep: number,
+    rua: string,
+    complemento?: string,
+    bairro: string,
+    cidade: string
 
-console.log(leitorDeArquivo());
+}
+
+type Usuario = {
+
+    nome: string,
+    email: string,
+    cpf: string,
+    profissao?: string,
+    endereco: Endereco | null
+
+}
+
+
+const cadastrarUsuario = (dados: Usuario): Usuario => {
+
+    const bd = leitorDeArquivo() as Usuario[]
+    bd.push(dados)
+
+    escritorDeArquivo(bd)
+
+    return dados;
+
+}
+
+const listarUsuarios = (): Usuario[] => {
+
+    return leitorDeArquivo() as Usuario[];
+
+}
+
+const evandro = cadastrarUsuario({
+    nome: 'Evandro',
+    email: 'evandro@email.com',
+    cpf: "123456789-10",
+    profissao: 'DEV',
+    endereco: {
+
+        cep: 456745213,
+        rua: 'Uma rua qualquer',
+        bairro: 'Um bairro qualquer',
+        cidade: 'Uma cidade qualquer'
+
+    }
+
+})
+
+const bd = leitorDeArquivo()
+console.log(evandro, bd);
