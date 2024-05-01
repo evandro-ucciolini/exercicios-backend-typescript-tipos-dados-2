@@ -51,21 +51,75 @@ const listarUsuarios = (): Usuario[] => {
 
 }
 
-const evandro = cadastrarUsuario({
+const detalharUsuario = (cpf: string): Usuario => {
+
+    const bd = leitorDeArquivo() as Usuario[]
+    const usuario = bd.find(usuario => {
+        return usuario.cpf === cpf
+    });
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado");
+
+    }
+
+    return usuario;
+
+}
+
+const atualizarUsuario = (cpf: string, dados: Usuario): Usuario => {
+
+    const bd = leitorDeArquivo() as Usuario[]
+    const usuario = bd.find(usuario => {
+        return usuario.cpf === cpf
+    });
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado");
+
+    }
+
+    Object.assign(usuario, dados);
+
+    escritorDeArquivo(bd)
+
+    return dados;
+
+
+}
+
+// const evandro = cadastrarUsuario({
+//     nome: 'Evandro',
+//     email: 'evandro@email.com',
+//     cpf: "123456789-10",
+//     profissao: 'DEV',
+//     endereco: {
+
+//         cep: 456745213,
+//         rua: 'Uma rua qualquer',
+//         bairro: 'Um bairro qualquer',
+//         cidade: 'Uma cidade qualquer'
+
+//     }
+
+// })
+
+//const evandro = detalharUsuario('123456789-10')
+
+atualizarUsuario('123456789-10', {
     nome: 'Evandro',
     email: 'evandro@email.com',
     cpf: "123456789-10",
-    profissao: 'DEV',
+    profissao: 'backend',
     endereco: {
 
         cep: 456745213,
-        rua: 'Uma rua qualquer',
+        rua: 'Uma rua ali qualquer',
         bairro: 'Um bairro qualquer',
         cidade: 'Uma cidade qualquer'
 
     }
-
 })
 
 const bd = leitorDeArquivo()
-console.log(evandro, bd);
+console.log(bd);
