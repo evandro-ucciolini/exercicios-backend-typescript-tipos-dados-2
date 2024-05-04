@@ -1,5 +1,3 @@
-import { cp } from "fs"
-
 const fs = require('fs')
 
 const leitorDeArquivo = () => {
@@ -47,9 +45,20 @@ const cadastrarUsuario = (dados: Usuario): Usuario => {
 
 }
 
-const listarUsuarios = (): Usuario[] => {
+const listarUsuarios = (filtro?: string): Usuario[] => {
 
-    return leitorDeArquivo() as Usuario[];
+    const bd = leitorDeArquivo() as Usuario[]
+
+    const usuarios = bd.filter(usuario => {
+
+        if (filtro) {
+            return usuario.profissao === filtro
+        }
+
+        return usuario;
+    })
+
+    return usuarios;
 
 }
 
