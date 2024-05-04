@@ -1,3 +1,5 @@
+import { cp } from "fs"
+
 const fs = require('fs')
 
 const leitorDeArquivo = () => {
@@ -106,20 +108,44 @@ const atualizarUsuario = (cpf: string, dados: Usuario): Usuario => {
 
 //const evandro = detalharUsuario('123456789-10')
 
-atualizarUsuario('123456789-10', {
-    nome: 'Evandro',
-    email: 'evandro@email.com',
-    cpf: "123456789-10",
-    profissao: 'backend',
-    endereco: {
+// atualizarUsuario('123456789-10', {
+//     nome: 'Evandro',
+//     email: 'evandro@email.com',
+//     cpf: "123456789-10",
+//     profissao: 'backend',
+//     endereco: {
 
-        cep: 456745213,
-        rua: 'Uma rua ali qualquer',
-        bairro: 'Um bairro qualquer',
-        cidade: 'Uma cidade qualquer'
+//         cep: 456745213,
+//         rua: 'Uma rua ali qualquer',
+//         bairro: 'Um bairro qualquer',
+//         cidade: 'Uma cidade qualquer'
+
+//     }
+// })
+
+const excluirUsuario = (cpf: string): Usuario => {
+
+    const bd = leitorDeArquivo() as Usuario[]
+    const usuario = bd.find(usuario => {
+        return usuario.cpf === cpf
+    });
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado");
 
     }
-})
+
+    const exclusao = bd.filter(usuario => {
+
+        return usuario.cpf !== cpf
+
+    })
+
+    escritorDeArquivo(exclusao)
+
+    return usuario;
+
+}
 
 const bd = leitorDeArquivo()
 console.log(bd);
